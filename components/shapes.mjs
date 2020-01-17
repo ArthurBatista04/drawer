@@ -1,6 +1,5 @@
-import { $$ } from "../utils/index.mjs";
+import { $$, ShapeSizes, GetRandomID } from "../utils/index.mjs";
 import Coordinate from "./coordinate.mjs";
-import { ShapeSizes } from "../utils/shapeSizes.mjs";
 export default class Shapes {
   constructor(store) {
     this.store = store;
@@ -8,7 +7,8 @@ export default class Shapes {
     this.points = [];
     this.drawing = false;
     this.shape = null;
-    this.$message = $$("div[id=rest]");
+    this.point = null;
+    this.$message = document.getElementById("rest");
     this.$canvas = document.getElementById("canvas");
     this.$buttons = [...$$("a[option=shape]")];
   }
@@ -16,40 +16,46 @@ export default class Shapes {
     this.points = [];
     this.drawing = false;
     this.shape = null;
-    this.$message.removeChild(this.$div.childNodes[0]);
+    if (this.$message.childNodes[0]) {
+      this.$message.removeChild(this.$message.childNodes[0]);
+    }
   }
   onClick({ target }) {
+    this.reset();
     this.shape = target.getAttribute("shape");
     this.drawing = true;
+
+    this.message(ShapeSizes[this.shape]);
     target.blur();
   }
 
   addPoint({ target }) {
-    let point = this.coordinates.getMousePos(this.$canvas, target);
     if (this.drawing) {
-      this.points.push(point);
+      this.points.push(this.point);
       this.verify();
     }
   }
   verify() {
-    shapeSizes[this.shape] == this.points.length
+    ShapeSizes[this.shape] == this.points.length
       ? this.create()
-      : message(ShapeSizes[this.shape] - this.points.length);
+      : this.message(ShapeSizes[this.shape] - this.points.length);
   }
   message(rest) {
     let message =
       rest == 1
         ? `You still have to select ${1} point`
         : `You still have to select ${rest} points`;
-    this.$message.innerHTML(message);
+    this.$message.innerHTML = message;
   }
   create() {
+    let randomId = GetRandomID();
     this.store.dispatch({
       type: "CREATE",
       shape: this.shape,
-      points: this.points
+      points: this.points,
+      id: randomId
     });
-    console.log(this.store.getState());
+
     this.reset();
   }
 
@@ -58,6 +64,13 @@ export default class Shapes {
       $btn.addEventListener("click", this.onClick.bind(this))
     );
     this.$canvas.addEventListener("click", this.addPoint.bind(this), false);
+    this.$canvas.addEventListener(
+      "mousedown",
+      e => {
+        this.point = this.coordinates.getMousePos(this.$canvas, e);
+      },
+      false
+    );
   }
   init() {
     this.store.subscribe(updateDom(this));
