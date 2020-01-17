@@ -11,14 +11,6 @@ export default class Coordinate {
   destroyMessage() {
     this.$div.removeChild(this.$div.childNodes[0]);
   }
-  addCoordinates(x, y) {
-    return {
-      type: "UPDATE",
-      x: x,
-      y: y
-    };
-  }
-
   getMousePos(canvas, evt) {
     var rect = canvas.getBoundingClientRect();
     return {
@@ -26,19 +18,19 @@ export default class Coordinate {
       y: evt.clientY - rect.top
     };
   }
-  updateCoordinate(evt) {
+  message(evt) {
     let mousePos = this.getMousePos(this.$canvas, evt);
-    this.store.dispatch(this.addCoordinates(mousePos.x, mousePos.y));
     let message = `Coordinates: (${mousePos.x},${mousePos.y})`;
     this.updateMessage(message);
   }
 
+  updateCoordinates(evt) {
+    let mousePos = this.getMousePos(this.$canvas, evt);
+    this.store.dispatch(this.addCoordinates(mousePos.x, mousePos.y));
+  }
+
   addEvents() {
-    this.$canvas.addEventListener(
-      "mousemove",
-      this.updateCoordinate.bind(this),
-      false
-    );
+    this.$canvas.addEventListener("mousemove", this.message.bind(this), false);
     this.$canvas.addEventListener(
       "mouseleave",
       this.destroyMessage.bind(this),
