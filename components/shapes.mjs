@@ -1,14 +1,15 @@
 import { $$ } from "../utils/index.mjs";
-import { Coordinates } from "./coordinate";
+import Coordinate from "./coordinate.mjs";
 import { ShapeSizes } from "../utils/shapeSizes.mjs";
 export default class Shapes {
   constructor(store) {
     this.store = store;
-    this.coordinates = new Coordinates();
+    this.coordinates = new Coordinate();
     this.points = [];
     this.drawing = false;
     this.shape = null;
     this.$message = $$("div[id=rest]");
+    this.$canvas = document.getElementById("canvas");
     this.$buttons = [...$$("a[option=shape]")];
   }
   reset() {
@@ -24,7 +25,7 @@ export default class Shapes {
   }
 
   addPoint({ target }) {
-    let point = this.coordinates.getMousePos(target);
+    let point = this.coordinates.getMousePos(this.$canvas, target);
     if (this.drawing) {
       this.points.push(point);
       this.verify();

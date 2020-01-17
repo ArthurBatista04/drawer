@@ -1,2 +1,2 @@
-import Coordinate from "./coordinate.mjs";
-export default Redux.combineReducers({ Coordinate });
+import Shapes from "./shapes.mjs";
+export default Redux.combineReducers({ Shapes });
