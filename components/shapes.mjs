@@ -20,7 +20,7 @@ export default class Shapes {
       this.$message.removeChild(this.$message.childNodes[0]);
     }
   }
-  onClick({ target }) {
+  selectOption({ target }) {
     this.reset();
     this.shape = target.getAttribute("shape");
     this.drawing = true;
@@ -32,10 +32,10 @@ export default class Shapes {
   addPoint({ target }) {
     if (this.drawing) {
       this.points.push(this.point);
-      this.verify();
+      this.isFinished();
     }
   }
-  verify() {
+  isFinished() {
     ShapeSizes[this.shape] == this.points.length
       ? this.create()
       : this.message(ShapeSizes[this.shape] - this.points.length);
@@ -60,7 +60,7 @@ export default class Shapes {
 
   addEvents() {
     this.$buttons.forEach($btn =>
-      $btn.addEventListener("click", this.onClick.bind(this))
+      $btn.addEventListener("click", this.selectOption.bind(this))
     );
     this.$canvas.addEventListener("click", this.addPoint.bind(this), false);
     this.$canvas.addEventListener(
