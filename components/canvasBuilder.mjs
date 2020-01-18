@@ -50,7 +50,8 @@ export default class CanvasBuilder {
     SQUARE: this.create_square
   };
 
-  updateBoards() {
+  updateCanvas() {
+    this.$ctx.clearRect(0, 0, 1300, 820);
     const objects = this.store.getState()["Shapes"];
 
     for (const [_, value] of Object.entries(objects)) {
@@ -60,6 +61,6 @@ export default class CanvasBuilder {
   }
 
   init() {
-    this.store.subscribe(this.updateBoards.bind(this));
+    this.store.subscribe(this.updateCanvas.bind(this));
   }
 }
