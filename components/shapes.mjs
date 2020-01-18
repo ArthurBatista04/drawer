@@ -55,7 +55,6 @@ export default class Shapes {
       points: this.points,
       id: randomId
     });
-
     this.reset();
   }
 
@@ -71,8 +70,5 @@ export default class Shapes {
       },
       false
     );
-  }
-  init() {
-    this.store.subscribe(updateDom(this));
   }
 }

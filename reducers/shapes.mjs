@@ -1,14 +1,13 @@
 export default function Shapes(state = [], action) {
   switch (action.type) {
     case "CREATE":
-      return [
+      return {
         ...state,
-        {
+        [action.id]: {
           shape: action.shape,
-          id: action.id,
           points: action.points
         }
-      ];
+      };
     default:
       return state;
   }
