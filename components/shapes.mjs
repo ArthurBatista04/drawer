@@ -43,7 +43,7 @@ export default class Shapes {
     } else {
       Toast.fire({
         icon: "info",
-        title: "Select a shape to start drawing"
+        title: "Select shape to start drawing"
       });
     }
   }
@@ -56,10 +56,7 @@ export default class Shapes {
     }
   }
   message(rest) {
-    let message =
-      rest == 1
-        ? `You still have to select ${1} point`
-        : `You still have to select ${rest} points`;
+    let message = rest == 1 ? `Select ${1} point` : `Select ${rest} points`;
     ToastMessage.fire({
       icon: "info",
       title: message
