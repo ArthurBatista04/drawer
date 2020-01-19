@@ -17,7 +17,7 @@ export const ShapeSizes = {
 
 export const Toast = Swal.mixin({
   toast: true,
-  position: "top",
+  position: "center-end",
   showConfirmButton: false,
   timer: 2000,
   timerProgressBar: true,
@@ -25,4 +25,9 @@ export const Toast = Swal.mixin({
     toast.addEventListener("mouseenter", Swal.stopTimer);
     toast.addEventListener("mouseleave", Swal.resumeTimer);
   }
+});
+export const ToastMessage = Swal.mixin({
+  toast: true,
+  position: "center-end",
+  showConfirmButton: false
 });

@@ -1,4 +1,11 @@
-import { $$, ShapeSizes, GetRandomID, Toast } from "../utils/index.mjs";
+import {
+  $$,
+  ShapeSizes,
+  GetRandomID,
+  Toast,
+  $,
+  ToastMessage
+} from "../utils/index.mjs";
 
 import Coordinate from "./coordinate.mjs";
 export default class Shapes {
@@ -9,7 +16,6 @@ export default class Shapes {
     this.drawing = false;
     this.shape = null;
     this.point = null;
-    this.$message = document.getElementById("rest");
     this.$canvas = document.getElementById("canvas");
     this.$ctx = this.$canvas.getContext("2d");
     this.$buttons = [...$$("a[option=shape]")];
@@ -18,9 +24,6 @@ export default class Shapes {
     this.points = [];
     this.drawing = false;
     this.shape = null;
-    if (this.$message.childNodes[0]) {
-      this.$message.removeChild(this.$message.childNodes[0]);
-    }
   }
   selectOption({ target }) {
     this.reset();
@@ -33,6 +36,7 @@ export default class Shapes {
 
   addPoint({ target }) {
     if (this.drawing) {
+      $(".swal2-popup") ? $(".swal2-popup").click() : null;
       this.points.push(this.point);
       this.$ctx.fillRect(this.point.x, this.point.y, 3, 3);
       this.isFinished();
@@ -44,16 +48,22 @@ export default class Shapes {
     }
   }
   isFinished() {
-    ShapeSizes[this.shape] == this.points.length
-      ? this.create()
-      : this.message(ShapeSizes[this.shape] - this.points.length);
+    if (ShapeSizes[this.shape] == this.points.length) {
+      $(".swal2-popup") ? $(".swal2-popup").click() : null;
+      this.create();
+    } else {
+      this.message(ShapeSizes[this.shape] - this.points.length);
+    }
   }
   message(rest) {
     let message =
       rest == 1
         ? `You still have to select ${1} point`
         : `You still have to select ${rest} points`;
-    this.$message.innerHTML = message;
+    ToastMessage.fire({
+      icon: "info",
+      title: message
+    });
   }
   create() {
     let randomId = GetRandomID();
