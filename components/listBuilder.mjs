@@ -13,7 +13,7 @@ export default class ListBuilder {
   }
   updateList() {
     const objects = getPresentState(this.store, "Shapes");
-    this.$list.innerHTML = `<li class="collection-header"><h4>Elements</h4></li>`;
+    this.$list.innerHTML = `<li class="collection-header"><h4>Shapes</h4></li>`;
     if (objects) {
       for (const [id, value] of Object.entries(objects)) {
         this.$list.innerHTML += `<li id="${id}" class='collection-item'>
@@ -41,7 +41,6 @@ export default class ListBuilder {
   }
   onSelect({ target }) {
     this.store.dispatch({ type: "SELECT", id: target.closest("li").id });
-    console.log(getPresentState(this.store, "Shapes"));
   }
   onDelete({ target }) {
     this.store.dispatch({ type: "DELETE", id: target.closest("li").id });
