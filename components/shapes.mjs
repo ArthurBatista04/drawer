@@ -10,6 +10,7 @@ export default class Shapes {
     this.point = null;
     this.$message = document.getElementById("rest");
     this.$canvas = document.getElementById("canvas");
+    this.$ctx = this.$canvas.getContext("2d");
     this.$buttons = [...$$("a[option=shape]")];
   }
   reset() {
@@ -32,6 +33,7 @@ export default class Shapes {
   addPoint({ target }) {
     if (this.drawing) {
       this.points.push(this.point);
+      this.$ctx.fillRect(this.point.x, this.point.y, 3, 3);
       this.isFinished();
     }
   }
