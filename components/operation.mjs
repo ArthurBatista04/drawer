@@ -1,4 +1,5 @@
 import { $$, $ } from "../utils/index.mjs";
+import { getPresentState } from "../stores/connect.mjs";
 export default class Operations {
   constructor(store) {
     this.store = store;
@@ -11,6 +12,10 @@ export default class Operations {
   }
   redo() {
     this.store.dispatch({ type: "REDO" });
+    let x = getPresentState(this.store, "Shapes");
+
+    let key = Object.keys(x)[0];
+    this.store.dispatch({ type: "SELECT", id: key });
   }
 
   addEvents() {

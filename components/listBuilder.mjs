@@ -5,6 +5,7 @@ export default class ListBuilder {
     this.store = store;
     this.$list = document.getElementById("list");
     this.$deleteButtons = [...$$("i[option=deleteShape]")];
+    this.$selectButtons = [...$$("i[option=selectShape]")];
   }
 
   capitlize(string) {
@@ -19,11 +20,11 @@ export default class ListBuilder {
       <div>
         ${this.capitlize(
           value.shape + id
-        )} <a href='#' class='secondary-content ' 
+        )} <a href='#' option="deleteShape" class='secondary-content ' 
           ><i class="material-icons red-text" option="deleteShape">delete</i></a
         >
-        <a href="#"  class="secondary-content"
-          ><i class="material-icons black-text">remove_red_eyes</i></a
+        <a href="#" option="selectShape"  class="secondary-content"
+          ><i option="selectShape" class="material-icons black-text">remove_red_eyes</i></a
         >
       </div>
     </li>`;
@@ -32,7 +33,15 @@ export default class ListBuilder {
       this.$deleteButtons.forEach($btn =>
         $btn.addEventListener("click", this.onDelete.bind(this))
       );
+      this.$selectButtons = [...$$("i[option=selectShape]")];
+      this.$selectButtons.forEach($btn =>
+        $btn.addEventListener("click", this.onSelect.bind(this))
+      );
     }
+  }
+  onSelect({ target }) {
+    this.store.dispatch({ type: "SELECT", id: target.closest("li").id });
+    console.log(getPresentState(this.store, "Shapes"));
   }
   onDelete({ target }) {
     this.store.dispatch({ type: "DELETE", id: target.closest("li").id });
