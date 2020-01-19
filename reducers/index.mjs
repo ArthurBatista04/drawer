@@ -1,2 +1,3 @@
 import Shapes from "./shapes.mjs";
-export default Redux.combineReducers({ Shapes });
+import Undoable from "./undoable.mjs";
+export default Redux.combineReducers({ Shapes: Undoable(Shapes) });

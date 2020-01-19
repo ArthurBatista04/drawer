@@ -1,4 +1,5 @@
 import { $$ } from "../utils/index.mjs";
+import { getPresentState } from "../stores/connect.mjs";
 export default class ListBuilder {
   constructor(store) {
     this.store = store;
@@ -10,10 +11,11 @@ export default class ListBuilder {
     return string.charAt(0).toUpperCase() + string.slice(1);
   }
   updateList() {
-    const objects = this.store.getState()["Shapes"];
+    const objects = getPresentState(this.store, "Shapes");
     this.$list.innerHTML = `<li class="collection-header"><h4>Elements</h4></li>`;
-    for (const [id, value] of Object.entries(objects)) {
-      this.$list.innerHTML += `<li id="${id}" class='collection-item'>
+    if (objects) {
+      for (const [id, value] of Object.entries(objects)) {
+        this.$list.innerHTML += `<li id="${id}" class='collection-item'>
       <div>
         ${this.capitlize(
           value.shape + id
@@ -25,11 +27,12 @@ export default class ListBuilder {
         >
       </div>
     </li>`;
+      }
+      this.$deleteButtons = [...$$("i[option=deleteShape]")];
+      this.$deleteButtons.forEach($btn =>
+        $btn.addEventListener("click", this.onDelete.bind(this))
+      );
     }
-    this.$deleteButtons = [...$$("i[option=deleteShape]")];
-    this.$deleteButtons.forEach($btn =>
-      $btn.addEventListener("click", this.onDelete.bind(this))
-    );
   }
   onDelete({ target }) {
     this.store.dispatch({ type: "DELETE", id: target.closest("li").id });

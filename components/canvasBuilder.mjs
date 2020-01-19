@@ -1,3 +1,4 @@
+import { getPresentState } from "../stores/connect.mjs";
 export default class CanvasBuilder {
   constructor(store) {
     this.store = store;
@@ -52,11 +53,12 @@ export default class CanvasBuilder {
 
   updateCanvas() {
     this.$ctx.clearRect(0, 0, 1300, 820);
-    const objects = this.store.getState()["Shapes"];
-
-    for (const [_, value] of Object.entries(objects)) {
-      const criator = this.shapeCriation[value.shape];
-      criator(value);
+    const objects = getPresentState(this.store, "Shapes");
+    if (objects) {
+      for (const [_, value] of Object.entries(objects)) {
+        const criator = this.shapeCriation[value.shape];
+        criator(value);
+      }
     }
   }
 

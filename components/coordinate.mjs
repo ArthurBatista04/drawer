@@ -9,7 +9,7 @@ export default class Coordinate {
     this.$div.innerHTML = message;
   }
   destroyMessage() {
-    this.$div.removeChild(this.$div.childNodes[0]);
+    if (this.$div.childNodes[0]) this.$div.removeChild(this.$div.childNodes[0]);
   }
   getMousePos(canvas, evt) {
     var rect = canvas.getBoundingClientRect();
