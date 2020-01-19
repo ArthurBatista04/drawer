@@ -28,6 +28,10 @@ export default function Shapes(state = [], action) {
           return [id, value];
         })
       );
+    case "UPDATE":
+      let newState = state;
+      newState[action.id].points = action.points;
+      return newState;
     case "CLEAR":
       return [];
     default:

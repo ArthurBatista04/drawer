@@ -52,7 +52,10 @@
     <script src="materilize/javascript/dropdown.js"></script>
     <script src="https://unpkg.com/redux@latest/dist/redux.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
-
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-dark@3/dark.css"
+    />
     <title>Drawer</title>
   </head>
   <body
@@ -90,15 +93,27 @@
           >
           <ul id="dropdown2" class="dropdown-content">
             <li>
-              <a class="black-text"
-                ><i class="material-icons right black-text">fullscreen</i>
+              <a
+                class="black-text"
+                option="transformation"
+                transformation="SCALE"
+                ><i
+                  transformation="SCALE"
+                  class="material-icons right black-text"
+                  >fullscreen</i
+                >
                 Change Scale</a
               >
             </li>
             <li class="divider" tabindex="-1"></li>
             <li>
-              <a class="black-text"
-                ><i class="material-icons right black-text"
+              <a
+                class="black-text"
+                option="transformation"
+                transformation="ROTATE"
+                ><i
+                  transformation="ROTATE"
+                  class="material-icons right black-text"
                   >rotate_90_degrees_ccw</i
                 >
                 Rotate</a
@@ -106,8 +121,15 @@
             </li>
             <li class="divider" tabindex="-1"></li>
             <li>
-              <a class="black-text"
-                ><i class="material-icons right black-text">open_with</i>
+              <a
+                class="black-text"
+                option="transformation"
+                transformation="TRANSLATE"
+                ><i
+                  transformation="TRANSLATE"
+                  class="material-icons right black-text"
+                  >open_with</i
+                >
                 Translate</a
               >
             </li>
