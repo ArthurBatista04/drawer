@@ -12,7 +12,9 @@ export default class CanvasBuilder {
     this.$ctx.beginPath();
     this.$ctx.moveTo(point1.x, point1.y);
     this.$ctx.lineTo(point2.x, point2.y);
-
+    object.selected
+      ? (this.$ctx.strokeStyle = "#ff0000")
+      : (this.$ctx.strokeStyle = "#000000");
     this.$ctx.stroke();
   };
   create_circle = object => {
@@ -23,6 +25,9 @@ export default class CanvasBuilder {
     const radius = Math.sqrt(difX + difY);
     this.$ctx.beginPath();
     this.$ctx.arc(point1.x, point1.y, radius, 0, 2 * Math.PI), true;
+    object.selected
+      ? (this.$ctx.strokeStyle = "#ff0000")
+      : (this.$ctx.strokeStyle = "#000000");
     this.$ctx.stroke();
   };
   create_triangle = object => {
@@ -34,6 +39,9 @@ export default class CanvasBuilder {
     this.$ctx.lineTo(point2.x, point2.y);
     this.$ctx.lineTo(point3.x, point3.y);
     this.$ctx.closePath();
+    object.selected
+      ? (this.$ctx.strokeStyle = "#ff0000")
+      : (this.$ctx.strokeStyle = "#000000");
     this.$ctx.stroke();
   };
   create_square = object => {
@@ -42,6 +50,9 @@ export default class CanvasBuilder {
     const difX = Math.pow(point1.x - point2.x, 2);
     const difY = Math.pow(point1.y - point2.y, 2);
     const width = Math.sqrt(difX + difY);
+    object.selected
+      ? (this.$ctx.strokeStyle = "#ff0000")
+      : (this.$ctx.strokeStyle = "#000000");
     this.$ctx.strokeRect(point1.x, point1.y, width, width);
   };
   shapeCriation = {
