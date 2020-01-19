@@ -1,4 +1,5 @@
-import { $$, ShapeSizes, GetRandomID } from "../utils/index.mjs";
+import { $$, ShapeSizes, GetRandomID, Toast } from "../utils/index.mjs";
+
 import Coordinate from "./coordinate.mjs";
 export default class Shapes {
   constructor(store) {
@@ -35,6 +36,11 @@ export default class Shapes {
       this.points.push(this.point);
       this.$ctx.fillRect(this.point.x, this.point.y, 3, 3);
       this.isFinished();
+    } else {
+      Toast.fire({
+        icon: "info",
+        title: "Select a shape to start drawing"
+      });
     }
   }
   isFinished() {

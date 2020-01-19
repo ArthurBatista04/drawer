@@ -4,3 +4,6 @@ canvas {
   margin: 0 auto;
   display: block;
 }
+canvas:hover {
+  cursor: pointer;
+}
