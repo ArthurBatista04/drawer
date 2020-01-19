@@ -28,7 +28,8 @@ export default function Shapes(state = [], action) {
           return [id, value];
         })
       );
-
+    case "CLEAR":
+      return [];
     default:
       return state;
   }

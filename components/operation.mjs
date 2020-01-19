@@ -5,6 +5,7 @@ export default class Operations {
     this.store = store;
     this.$undo = $("a[option = undo]");
     this.$redo = $("a[option = redo]");
+    this.$clear = $("a[option = clear]");
   }
 
   undo() {
@@ -12,14 +13,13 @@ export default class Operations {
   }
   redo() {
     this.store.dispatch({ type: "REDO" });
-    let x = getPresentState(this.store, "Shapes");
-
-    let key = Object.keys(x)[0];
-    this.store.dispatch({ type: "SELECT", id: key });
   }
-
+  clear() {
+    this.store.dispatch({ type: "CLEAR" });
+  }
   addEvents() {
     this.$undo.addEventListener("click", this.undo.bind(this), false);
     this.$redo.addEventListener("click", this.redo.bind(this), false);
+    this.$clear.addEventListener("click", this.clear.bind(this), false);
   }
 }
