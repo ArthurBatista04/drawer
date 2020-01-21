@@ -1,3 +1,17 @@
+import {
+  getAngle,
+  getMinVerticeDistance,
+  multiply,
+  getScales,
+  TransformationSize
+} from "./transformation.mjs";
+export {
+  getAngle,
+  getMinVerticeDistance,
+  multiply,
+  TransformationSize,
+  getScales
+};
 export const $ = document.querySelector.bind(document);
 export const $$ = document.querySelectorAll.bind(document);
 export const GetRandomID = () => {
@@ -31,62 +45,3 @@ export const ToastMessage = Swal.mixin({
   position: "center-end",
   showConfirmButton: false
 });
-
-export const getMinVerticeDistance = (shapes, userPoint) => {
-  let min = 10000000;
-  let minVertice = null;
-  for (const [id, value] of Object.entries(shapes)) {
-    value.points.forEach(point => {
-      const difX = Math.pow(userPoint.x - point.x, 2);
-      const difY = Math.pow(userPoint.y - point.y, 2);
-      const res = Math.sqrt(difX + difY);
-      if (res < min) {
-        min = res;
-        minVertice = point;
-      }
-    });
-  }
-  return minVertice;
-};
-
-const translate = async () => {
-  try {
-    const { value: formValues } = await Swal.fire({
-      title: "Position to translate",
-      html:
-        "<label>X</label>" +
-        '<input id="swal-input1" class="swal2-input">' +
-        "<label>Y</label>" +
-        '<input id="swal-input2" class="swal2-input">',
-      focusConfirm: false,
-      inputValidator: value => {
-        if (!value[0] || !value[1]) {
-          return "You need to write something!";
-        } else if (isNAN(value[0]) || isNaN(value[1])) {
-          return "Input only accepts numbers!";
-        }
-      },
-      preConfirm: () => {
-        const x = document.getElementById("swal-input1").value;
-        const y = document.getElementById("swal-input2").value;
-        if (!x || !y) {
-          Swal.showValidationMessage("You need to write both coordiantes!");
-        } else if (isNaN(x) || isNaN(y)) {
-          Swal.showValidationMessage("Input only accepts numbers!");
-        } else {
-          return [parseFloat(x), parseFloat(y)];
-        }
-      }
-    });
-
-    return formValues;
-  } catch (e) {
-    console.log("error:", e);
-    return false;
-  }
-};
-export const GetValues = {
-  TRANSLATE: translate
-  // ROTATE: rotate,
-  // SCALE: scale
-};

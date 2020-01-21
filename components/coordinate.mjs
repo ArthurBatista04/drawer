@@ -14,8 +14,8 @@ export default class Coordinate {
   getMousePos(canvas, evt) {
     var rect = canvas.getBoundingClientRect();
     return {
-      x: evt.clientX - rect.left,
-      y: evt.clientY - rect.top
+      x: evt.offsetX,
+      y: evt.offsetY
     };
   }
   message(evt) {

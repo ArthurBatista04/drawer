@@ -2,9 +2,10 @@ import configureStore from "./stores/configureStore.mjs";
 import {
   Coordinate,
   CanvasBuilder,
-  Operations,
+  Extras,
   ListBuilder,
-  Shapes
+  Shapes,
+  Transformations
 } from "./components/index.mjs";
 
 const store = configureStore();
@@ -12,10 +13,12 @@ const coordinate = new Coordinate();
 const shapes = new Shapes(store);
 const canvasBuilder = new CanvasBuilder(store);
 const listBuilder = new ListBuilder(store);
-const operation = new Operations(store);
+const extras = new Extras(store);
+const transformations = new Transformations(store);
 
 shapes.addEvents();
 coordinate.addEvents();
-operation.addEvents();
+extras.addEvents();
+transformations.addEvents();
 canvasBuilder.init();
 listBuilder.init();
