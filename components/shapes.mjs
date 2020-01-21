@@ -16,6 +16,7 @@ export default class Shapes {
     this.points = [];
     this.drawing = false;
     this.shape = null;
+    this.id = 1;
     this.point = null;
     this.$canvas = document.getElementById("canvas");
     this.$ctx = this.$canvas.getContext("2d");
@@ -60,8 +61,6 @@ export default class Shapes {
     });
   }
   create() {
-    let randomId = GetRandomID();
-
     if (this.shape == "SQUARE") {
       this.points = squarePoints(this.points);
     }
@@ -69,9 +68,10 @@ export default class Shapes {
       type: "CREATE",
       shape: this.shape,
       points: this.points,
-      id: randomId
+      id: this.id
     });
     this.reset();
+    this.id++;
   }
   logKey(e) {
     if (e.key === "Escape") {

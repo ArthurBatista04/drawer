@@ -19,7 +19,7 @@ export default class ListBuilder {
         this.$list.innerHTML += `<li id="${id}" class='collection-item'>
       <div>
         ${this.capitlize(
-          value.shape + id
+          value.shape + "_" + id
         )} <a href='#' option="deleteShape" class='secondary-content ' 
           ><i class="material-icons red-text" option="deleteShape">delete</i></a
         >
@@ -42,8 +42,14 @@ export default class ListBuilder {
   onSelect({ target }) {
     this.store.dispatch({ type: "SELECT", id: target.closest("li").id });
   }
+  select(id) {
+    this.store.dispatch({ type: "SELECT", id: id });
+  }
   onDelete({ target }) {
     this.store.dispatch({ type: "DELETE", id: target.closest("li").id });
+  }
+  delete(id) {
+    this.store.dispatch({ type: "DELETE", id: id });
   }
 
   init() {
