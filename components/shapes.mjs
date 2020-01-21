@@ -74,7 +74,7 @@ export default class Shapes {
     this.reset();
   }
   logKey(e) {
-    if (e.code == "Space") {
+    if (e.key === "Escape") {
       this.reset();
     }
   }
@@ -91,6 +91,6 @@ export default class Shapes {
       },
       false
     );
-    document.addEventListener("keypress", this.logKey.bind(this), false);
+    document.addEventListener("keydown", this.logKey.bind(this), false);
   }
 }

@@ -159,7 +159,7 @@ export default class Transformations {
     }
   }
   logKey(e) {
-    if (e.code == "Space") {
+    if (e.key == "Escape") {
       this.reset();
     }
   }
@@ -176,6 +176,6 @@ export default class Transformations {
       false
     );
     this.$canvas.addEventListener("click", this.addPoint.bind(this), false);
-    document.addEventListener("keypress", this.logKey.bind(this), false);
+    document.addEventListener("keydown", this.logKey.bind(this), false);
   }
 }

@@ -9,6 +9,7 @@ export default class Extras {
 		this.$clear = $("a[option = clear]");
 	}
 
+<<<<<<< HEAD
 	undo() {
 		this.store.dispatch({type: "UNDO"});
 	}
@@ -24,4 +25,28 @@ export default class Extras {
 		this.$redo.addEventListener("click", this.redo.bind(this), false);
 		this.$clear.addEventListener("click", this.clear.bind(this), false);
 	}
+=======
+  undo() {
+    this.store.dispatch({ type: "UNDO" });
+  }
+  redo() {
+    this.store.dispatch({ type: "REDO" });
+  }
+  clear() {
+    this.store.dispatch({ type: "CLEAR" });
+  }
+  logKey(e) {
+    if (e.key === "z") {
+      this.undo();
+    } else if (e.key === "y") {
+      this.redo();
+    }
+  }
+  addEvents() {
+    document.addEventListener("keydown", this.logKey.bind(this), false);
+    this.$undo.addEventListener("click", this.undo.bind(this), false);
+    this.$redo.addEventListener("click", this.redo.bind(this), false);
+    this.$clear.addEventListener("click", this.clear.bind(this), false);
+  }
+>>>>>>> ad678c4d46fd9b65b6ab3bb7c08e72d989e29d2c
 }
