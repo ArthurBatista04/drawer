@@ -45,3 +45,17 @@ export const ToastMessage = Swal.mixin({
   position: "center-end",
   showConfirmButton: false
 });
+
+export const squarePoints = points => {
+  const point4 = points.pop();
+  const point1 = points.pop();
+  const difX = Math.pow(point1.x - point4.x, 2);
+  const difY = Math.pow(point1.y - point4.y, 2);
+  const hipo = Math.sqrt(difX + difY);
+  const distance = hipo / Math.sqrt(2);
+  const point2 = { x: point1.x + distance, y: point1.y };
+  const point3 = { x: point1.x, y: point1.y + distance };
+  const newPoints = [point1, point2, point3, point4];
+  console.log(newPoints);
+  return newPoints;
+};

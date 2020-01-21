@@ -4,6 +4,7 @@ import {
   GetRandomID,
   Toast,
   $,
+  squarePoints,
   ToastMessage
 } from "../utils/index.mjs";
 
@@ -60,6 +61,10 @@ export default class Shapes {
   }
   create() {
     let randomId = GetRandomID();
+
+    if (this.shape == "SQUARE") {
+      this.points = squarePoints(this.points);
+    }
     this.store.dispatch({
       type: "CREATE",
       shape: this.shape,

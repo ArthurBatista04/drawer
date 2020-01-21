@@ -47,13 +47,19 @@ export default class CanvasBuilder {
   create_square = object => {
     const point1 = object.points[0];
     const point2 = object.points[1];
-    const difX = Math.pow(point1.x - point2.x, 2);
-    const difY = Math.pow(point1.y - point2.y, 2);
-    const width = Math.sqrt(difX + difY);
+    const point3 = object.points[2];
+    const point4 = object.points[3];
     object.selected
       ? (this.$ctx.strokeStyle = "#ff0000")
       : (this.$ctx.strokeStyle = "#000000");
-    this.$ctx.strokeRect(point1.x, point1.y, width, width);
+    this.$ctx.beginPath();
+    this.$ctx.moveTo(point1.x, point1.y);
+    this.$ctx.lineTo(point2.x, point2.y);
+    this.$ctx.lineTo(point4.x, point4.y);
+    this.$ctx.lineTo(point3.x, point3.y);
+    // this.$ctx.lineTo(point4.x, point4.y);
+    this.$ctx.closePath();
+    this.$ctx.stroke();
   };
   shapeCriation = {
     LINE: this.create_line,
