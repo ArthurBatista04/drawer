@@ -29,9 +29,21 @@ export default function Shapes(state = [], action) {
         })
       );
     case "UPDATE":
-      let newState = state;
-      newState[action.id].points = action.points;
-      return newState;
+      return Object.fromEntries(
+        Object.entries(state).map(([id, value]) => {
+          if (id === action.id) {
+            return [
+              id,
+              {
+                ...value,
+                points: action.points
+              }
+            ];
+          }
+          return [id, value];
+        })
+      );
+
     case "CLEAR":
       return [];
     default:

@@ -27,7 +27,9 @@ export default function undoable(reducer) {
         };
       default:
         // Delegate handling the action to the passed reducer
+
         const newPresent = reducer(present, action);
+
         if (present === newPresent) {
           return state;
         }

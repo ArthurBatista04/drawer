@@ -40,11 +40,6 @@ export default class Shapes {
       this.points.push(this.point);
       this.$ctx.fillRect(this.point.x, this.point.y, 3, 3);
       this.isFinished();
-    } else {
-      Toast.fire({
-        icon: "info",
-        title: "Select shape to start drawing"
-      });
     }
   }
   isFinished() {

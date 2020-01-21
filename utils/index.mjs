@@ -32,6 +32,23 @@ export const ToastMessage = Swal.mixin({
   showConfirmButton: false
 });
 
+export const getMinVerticeDistance = (shapes, userPoint) => {
+  let min = 10000000;
+  let minVertice = null;
+  for (const [id, value] of Object.entries(shapes)) {
+    value.points.forEach(point => {
+      const difX = Math.pow(userPoint.x - point.x, 2);
+      const difY = Math.pow(userPoint.y - point.y, 2);
+      const res = Math.sqrt(difX + difY);
+      if (res < min) {
+        min = res;
+        minVertice = point;
+      }
+    });
+  }
+  return minVertice;
+};
+
 const translate = async () => {
   try {
     const { value: formValues } = await Swal.fire({
