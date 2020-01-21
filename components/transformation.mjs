@@ -63,13 +63,14 @@ export default class Transformations {
     }
   }
 
-  scale(scales, point) {
+  scale(scales) {
     const shapes = getSelectedShapes(this.store, "Shapes");
-    const vertice = getMinVerticeDistance(shapes, point);
-    const line1 = [scales.x, 0, vertice.x - vertice.x * scales.x];
-    const line2 = [0, scales.y, vertice.y - vertice.y * scales.y];
-    const line3 = [0, 0, 1];
+
     for (const [id, value] of Object.entries(shapes)) {
+      const first = value.points[0];
+      const line1 = [scales.x, 0, first.x - first.x * scales.x];
+      const line2 = [0, scales.y, first.y - first.y * scales.y];
+      const line3 = [0, 0, 1];
       let matrixPoints = [[], [], []];
       for (const point of value.points) {
         matrixPoints[0].push(point.x);
@@ -122,32 +123,33 @@ export default class Transformations {
     }
   }
   async isFinished() {
-    if (this.points.length === TransformationSize[this.operation]) {
-      if (this.operation == "TRANSLATE") {
-        const translationPoint = this.points.pop();
-        const referencePoint = this.points.pop();
-        this.translate(translationPoint, referencePoint);
-      } else if (this.operation == "ROTATE") {
-        const referencePoint = this.points.pop();
-        const angle = await getAngle();
-        this.rotate(angle, referencePoint);
+    if (this.operation == "TRANSLATE" || this.operation == "ROTATE")
+      if (this.points.length === TransformationSize[this.operation]) {
+        if (this.operation == "TRANSLATE") {
+          const translationPoint = this.points.pop();
+          const referencePoint = this.points.pop();
+          this.translate(translationPoint, referencePoint);
+        } else if (this.operation == "ROTATE") {
+          const referencePoint = this.points.pop();
+          const angle = await getAngle();
+          this.rotate(angle, referencePoint);
+        }
+        this.reset();
       } else {
-        const referencePoint = this.points.pop();
-        const scales = await getScales();
-        this.scale(scales, referencePoint);
+        let message;
+        if (this.operation == "TRANSLATE") {
+          message =
+            this.points.length == 0
+              ? " Select a shape vertice"
+              : "Select a point to translate to";
+        } else {
+          message = `Select a reference point `;
+        }
+        this.message(message);
       }
-      this.reset();
-    } else {
-      let message;
-      if (this.operation == "TRANSLATE") {
-        message =
-          this.points.length == 0
-            ? " Select a shape vertice"
-            : "Select a point to translate to";
-      } else {
-        message = `Select a reference point `;
-      }
-      this.message(message);
+    else {
+      const scales = await getScales();
+      this.scale(scales);
     }
   }
   addPoint() {
