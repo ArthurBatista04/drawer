@@ -63,7 +63,31 @@ export default class Transformations {
     }
   }
 
-  scale() {}
+  scale(scales, point) {
+    const shapes = getSelectedShapes(this.store, "Shapes");
+    const vertice = getMinVerticeDistance(shapes, point);
+    const line1 = [scales.x, 0, vertice.x - vertice.x * scales.x];
+    const line2 = [0, scales.y, vertice.y - vertice.y * scales.y];
+    const line3 = [0, 0, 1];
+    for (const [id, value] of Object.entries(shapes)) {
+      let matrixPoints = [[], [], []];
+      for (const point of value.points) {
+        matrixPoints[0].push(point.x);
+        matrixPoints[1].push(point.y);
+        matrixPoints[2].push(1);
+      }
+      const result = multiply([line1, line2, line3], matrixPoints);
+      let newPoints = [];
+      for (let i = 0; i < value.points.length; i++) {
+        newPoints.push({ x: result[0][i] });
+      }
+      for (let i = 0; i < value.points.length; i++) {
+        newPoints[i]["y"] = result[1][i];
+      }
+
+      this.store.dispatch({ type: "UPDATE", points: newPoints, id: id });
+    }
+  }
   translate(translationPoint, referencePoint) {
     const shapes = getSelectedShapes(this.store, "Shapes");
     const extremePoint = getMinVerticeDistance(shapes, referencePoint);
@@ -98,43 +122,43 @@ export default class Transformations {
     }
   }
   async isFinished() {
-    if (this.operation == "ROTATE" || this.operation == "TRANSLATE") {
-      if (this.points.length === TransformationSize[this.operation]) {
-        if (this.operation == "TRANSLATE") {
-          const translationPoint = this.points.pop();
-          const referencePoint = this.points.pop();
-          this.translate(translationPoint, referencePoint);
-        } else {
-          const referencePoint = this.points.pop();
-          const angle = await getAngle();
-          this.rotate(angle, referencePoint);
-        }
-        this.reset();
+    if (this.points.length === TransformationSize[this.operation]) {
+      if (this.operation == "TRANSLATE") {
+        const translationPoint = this.points.pop();
+        const referencePoint = this.points.pop();
+        this.translate(translationPoint, referencePoint);
+      } else if (this.operation == "ROTATE") {
+        const referencePoint = this.points.pop();
+        const angle = await getAngle();
+        this.rotate(angle, referencePoint);
       } else {
-        let message;
-        if (this.operation == "TRANSLATE") {
-          message =
-            this.points.length == 0
-              ? " Select a shape vertice"
-              : "Select a point to translate to";
-        } else {
-          message = `Select a reference point `;
-        }
-        this.message(message);
+        const referencePoint = this.points.pop();
+        const scales = await getScales();
+        this.scale(scales, referencePoint);
       }
+      this.reset();
     } else {
-      const scales = await getScales();
-      this.scale();
+      let message;
+      if (this.operation == "TRANSLATE") {
+        message =
+          this.points.length == 0
+            ? " Select a shape vertice"
+            : "Select a point to translate to";
+      } else {
+        message = `Select a reference point `;
+      }
+      this.message(message);
     }
   }
   addPoint() {
-    if (
-      this.isTransformation &&
-      (this.operation === "ROTATE" || this.operation === "TRANSLATE")
-    ) {
+    if (this.isTransformation) {
       this.points.push(this.point);
-
       this.isFinished();
+    }
+  }
+  logKey(e) {
+    if (e.code == "Space") {
+      this.reset();
     }
   }
 
@@ -150,5 +174,6 @@ export default class Transformations {
       false
     );
     this.$canvas.addEventListener("click", this.addPoint.bind(this), false);
+    document.addEventListener("keypress", this.logKey.bind(this), false);
   }
 }

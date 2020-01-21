@@ -59,11 +59,11 @@ export const getScales = async () => {
         const x = document.getElementById("swal-input1").value;
         const y = document.getElementById("swal-input2").value;
         if (!x || !y) {
-          return "You need to write both values!";
+          Swal.showValidationMessage("You need to write both values!");
         } else if (isNaN(x) || isNaN(y)) {
-          return "Input must be a number!";
+          Swal.showValidationMessage("Input must be a number!");
         } else {
-          return { x: parseInt(x), y: parseInt(y) };
+          return { x: parseFloat(x), y: parseFloat(y) };
         }
       }
     });
@@ -94,5 +94,5 @@ export const getMinVerticeDistance = (shapes, userPoint) => {
 export const TransformationSize = {
   TRANSLATE: 2,
   ROTATE: 1,
-  SCALE: 0
+  SCALE: 1
 };

@@ -24,6 +24,7 @@ export default class Shapes {
     this.points = [];
     this.drawing = false;
     this.shape = null;
+    $(".swal2-popup") ? $(".swal2-popup").click() : null;
   }
   selectOption({ target }) {
     this.reset();
@@ -67,6 +68,11 @@ export default class Shapes {
     });
     this.reset();
   }
+  logKey(e) {
+    if (e.code == "Space") {
+      this.reset();
+    }
+  }
 
   addEvents() {
     this.$buttons.forEach($btn =>
@@ -80,5 +86,6 @@ export default class Shapes {
       },
       false
     );
+    document.addEventListener("keypress", this.logKey.bind(this), false);
   }
 }
