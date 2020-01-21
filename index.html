@@ -56,8 +56,14 @@
 			document.addEventListener("DOMContentLoaded", function() {
 				const elems = document.querySelectorAll(".modal");
 				const instances = M.Modal.init(elems);
-			});
-		</script>
+      });
+    </script>
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        const elems = document.querySelectorAll('.tooltipped');
+        const instances = M.Tooltip.init(elems);
+      });
+    </script>
 		<link
 			rel="stylesheet"
 			href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-dark@3/dark.css"
@@ -131,7 +137,13 @@
 							<p>
 								To open the command line, use the shortcut
 								<code>CRTL+SHIFT+K</code> on Firefox or
-								<code>CRTL+SHIFT+J</code> on Chrome
+								<code>CRTL+SHIFT+J</code> on Chrome The workflow on the command
+								line is similar to the GUI. First you have to create the shape,
+								then you have to select, lastly you can apply the
+                transformation. Example:
+                <p><code>create_line(x1, x2)</code></p>
+                <p><code>select_shape(id_shape)</code></p>
+                <p><code>scale(x1,x2)</code></p>
 							</p>
 							<table>
 								<thead>
@@ -191,31 +203,12 @@
 									</tr>
 								</tbody>
 							</table>
-							<h2 id="technical-specification">Technical specification</h2>
-							<p>
-								This program was written in Javascript with the library
-								<code>Redux</code>.
-							</p>
-							<p>
-								To install <code>Redux</code> you can run the following command:
-							</p>
-							<p><code>npm install redux</code></p>
-							<p>
-								obs: This assumes you are using <code>npm</code> as your package
-								manager.
-							</p>
-							<h2 id="run-the-drawer">Run the drawer</h2>
-							<p>
-								To execute the program, you need to run the following command:
-							</p>
-							<p><code>npm install</code></p>
-							<p><code>node index.js</code></p>
 						</body>
 					</html>
 				</div>
 				<div class="modal-footer">
 					<a href="#!" class="modal-close waves-effect waves-green btn-flat"
-						>Agree</a
+						>Got it</a
 					>
 				</div>
 			</div>
@@ -226,7 +219,7 @@
 				<ul class="right hide-on-med-and-down">
 					<a
 						class="waves-effect black btn-small waves-light btn modal-trigger"
-						data-target="modal1"
+            data-target="modal1"
 						><i class="material-icons right">live_help</i>Help</a
 					>
 					<a class="waves-effect black btn-small"
@@ -235,15 +228,15 @@
 					<a class="waves-effect black btn-small"
 						><i class="material-icons right">zoom_out</i>Zoom extend</a
 					>
-					<a class="waves-effect black btn-small" option="undo"
+					<a class="waves-effect black btn-small tooltipped" option="undo" tooltipped" data-position="bottom" data-tooltip="CRTL + Z"
 						><i option="undo" class="material-icons right">rotate_left</i
 						>Undo</a
 					>
-					<a class="waves-effect black btn-small" option="redo"
+					<a class="waves-effect black btn-small tooltipped" option="redo" tooltipped" data-position="bottom" data-tooltip="CRTL + Y"
 						><i option="redo" class="material-icons right">rotate_right</i
 						>Redo</a
 					>
-					<a option="clear" class="waves-effect black btn-small"
+					<a option="clear" class="waves-effect black btn-small tooltipped" tooltipped" data-position="bottom" data-tooltip="CRTL + R"
 						><i option="clear" class="material-icons right">clear</i>Clear</a
 					>
 					<a class="black dropdown-trigger btn" href="#" data-target="dropdown2"
