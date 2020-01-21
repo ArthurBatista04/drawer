@@ -56,6 +56,6 @@ export const squarePoints = points => {
   const point2 = { x: point1.x + distance, y: point1.y };
   const point3 = { x: point1.x, y: point1.y + distance };
   const newPoints = [point1, point2, point3, point4];
-  console.log(newPoints);
+
   return newPoints;
 };
