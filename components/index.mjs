@@ -4,11 +4,13 @@ import CanvasBuilder from "./canvasBuilder.mjs";
 import Shapes from "./shapes.mjs";
 import Extras from "./extra.mjs";
 import Transformations from "./transformation.mjs";
+import Zoom from "./zoom.mjs";
 export {
   Coordinate,
   ListBuilder,
   CanvasBuilder,
   Shapes,
   Extras,
-  Transformations
+  Transformations,
+  Zoom
 };

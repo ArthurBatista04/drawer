@@ -5,7 +5,8 @@ import {
   Extras,
   ListBuilder,
   Shapes,
-  Transformations
+  Transformations,
+  Zoom
 } from "./components/index.mjs";
 
 const store = configureStore();
@@ -15,11 +16,12 @@ const canvasBuilder = new CanvasBuilder(store);
 const listBuilder = new ListBuilder(store);
 const extras = new Extras(store);
 const transformations = new Transformations(store);
-
+const zoom = new Zoom(store);
 shapes.addEvents();
 coordinate.addEvents();
 extras.addEvents();
 transformations.addEvents();
+zoom.addEvents();
 canvasBuilder.init();
 listBuilder.init();
 
