@@ -55,3 +55,11 @@ export const squarePoints = points => {
 
   return newPoints;
 };
+export const getExtremePoints = values => {
+  values = values.flat();
+  let yMin = values.reduce((min, p) => (p.y < min ? p.y : min), values[0].y);
+  let yMax = values.reduce((max, p) => (p.y > max ? p.y : max), values[0].y);
+  let xMin = values.reduce((min, p) => (p.x < min ? p.x : min), values[0].x);
+  let xMax = values.reduce((max, p) => (p.x > max ? p.x : max), values[0].x);
+  return [yMin, yMax, xMin, xMax];
+};
