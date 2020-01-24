@@ -2,6 +2,7 @@ import { getPoints, getPresentState } from "../stores/connect.mjs";
 import {
   multiply,
   ToastMessage,
+  Toast,
   getExtremePoints,
   squarePoints
 } from "../utils/index.mjs";
@@ -26,85 +27,91 @@ export default class Zoom {
   }
   callZoomExtend() {
     const points = getPoints(this.store);
-    const extremePoints = getExtremePoints(points);
-    this.zoomExtend(extremePoints);
+    this.zoomExtend(points);
   }
 
-  zoomExtend(points) {
+  zoomExtend(inputPoints) {
     const shapes = getPresentState(this.store);
-
-    const x = { min: points[2], max: points[3] };
-    const y = { min: points[0], max: points[1] };
-    const u = { min: 0, max: this.$canvas.width };
-    const v = { min: 0, max: this.$canvas.height };
-    const rw = (x.max - x.min) / (y.max - y.min);
-    const rv = (u.max - u.min) / (v.max - v.min);
-
-    rw > rv
-      ? (v.newMax = (u.max - u.min) / rw + v.min)
-      : (u.newMax = rw * (v.max - v.min) + u.min);
-
-    let sy = 0;
-    let sx = 0;
-
-    if (rw > rv) {
-      sy = (v.newMax - v.min) / (y.max - y.min);
-      sx = (u.max - u.min) / (x.max - x.min);
+    if (jQuery.isEmptyObject(shapes)) {
+      Toast.fire({
+        icon: "warning",
+        title: "No shape avaliable for zooming"
+      });
     } else {
-      sy = (v.max - v.min) / (y.max - y.min);
-      sx = (u.newMax - u.min) / (x.max - x.min);
-    }
-    const line1 = [sx, 0, -sx * x.min];
-    const line2 = [0, sy, -sy * y.min];
-    const line3 = [0, 0, 1];
-    if (rw > rv) {
-      const line4 = [1, 0, 0];
-      const line5 = [0, 1, (v.max - v.newMax) / 2];
-      const line6 = [0, 0, 1];
-      for (const [id, value] of Object.entries(shapes)) {
-        let matrixPoints = [[], [], []];
+      const points = getExtremePoints(inputPoints);
+      const x = { min: points[2], max: points[3] };
+      const y = { min: points[0], max: points[1] };
+      const u = { min: 0, max: this.$canvas.width };
+      const v = { min: 0, max: this.$canvas.height };
+      const rw = (x.max - x.min) / (y.max - y.min);
+      const rv = (u.max - u.min) / (v.max - v.min);
 
-        for (const point of value.points) {
-          matrixPoints[0].push(point.x);
-          matrixPoints[1].push(point.y);
-          matrixPoints[2].push(1);
-        }
+      rw > rv
+        ? (v.newMax = (u.max - u.min) / rw + v.min)
+        : (u.newMax = rw * (v.max - v.min) + u.min);
 
-        let result = multiply([line1, line2, line3], matrixPoints);
-        result = multiply([line4, line5, line6], result);
-        let newPoints = [];
-        for (let i = 0; i < value.points.length; i++) {
-          newPoints.push({ x: result[0][i] });
-        }
+      let sy = 0;
+      let sx = 0;
 
-        for (let i = 0; i < value.points.length; i++) {
-          newPoints[i]["y"] = result[1][i];
-        }
-
-        this.store.dispatch({ type: "UPDATE", points: newPoints, id: id });
+      if (rw > rv) {
+        sy = (v.newMax - v.min) / (y.max - y.min);
+        sx = (u.max - u.min) / (x.max - x.min);
+      } else {
+        sy = (v.max - v.min) / (y.max - y.min);
+        sx = (u.newMax - u.min) / (x.max - x.min);
       }
-    } else {
-      const line4 = [1, 0, (u.max - u.newMax) / 2];
-      const line5 = [0, 1, 0];
-      const line6 = [0, 0, 1];
-      for (const [id, value] of Object.entries(shapes)) {
-        let matrixPoints = [[], [], []];
-        for (const point of value.points) {
-          matrixPoints[0].push(point.x);
-          matrixPoints[1].push(point.y);
-          matrixPoints[2].push(1);
-        }
-        let result = multiply([line1, line2, line3], matrixPoints);
-        result = multiply([line4, line5, line6], result);
-        let newPoints = [];
-        for (let i = 0; i < value.points.length; i++) {
-          newPoints.push({ x: result[0][i] });
-        }
-        for (let i = 0; i < value.points.length; i++) {
-          newPoints[i]["y"] = result[1][i];
-        }
+      const line1 = [sx, 0, -sx * x.min];
+      const line2 = [0, sy, -sy * y.min];
+      const line3 = [0, 0, 1];
+      if (rw > rv) {
+        const line4 = [1, 0, 0];
+        const line5 = [0, 1, (v.max - v.newMax) / 2];
+        const line6 = [0, 0, 1];
+        for (const [id, value] of Object.entries(shapes)) {
+          let matrixPoints = [[], [], []];
 
-        this.store.dispatch({ type: "UPDATE", points: newPoints, id: id });
+          for (const point of value.points) {
+            matrixPoints[0].push(point.x);
+            matrixPoints[1].push(point.y);
+            matrixPoints[2].push(1);
+          }
+
+          let result = multiply([line1, line2, line3], matrixPoints);
+          result = multiply([line4, line5, line6], result);
+          let newPoints = [];
+          for (let i = 0; i < value.points.length; i++) {
+            newPoints.push({ x: result[0][i] });
+          }
+
+          for (let i = 0; i < value.points.length; i++) {
+            newPoints[i]["y"] = result[1][i];
+          }
+
+          this.store.dispatch({ type: "UPDATE", points: newPoints, id: id });
+        }
+      } else {
+        const line4 = [1, 0, (u.max - u.newMax) / 2];
+        const line5 = [0, 1, 0];
+        const line6 = [0, 0, 1];
+        for (const [id, value] of Object.entries(shapes)) {
+          let matrixPoints = [[], [], []];
+          for (const point of value.points) {
+            matrixPoints[0].push(point.x);
+            matrixPoints[1].push(point.y);
+            matrixPoints[2].push(1);
+          }
+          let result = multiply([line1, line2, line3], matrixPoints);
+          result = multiply([line4, line5, line6], result);
+          let newPoints = [];
+          for (let i = 0; i < value.points.length; i++) {
+            newPoints.push({ x: result[0][i] });
+          }
+          for (let i = 0; i < value.points.length; i++) {
+            newPoints[i]["y"] = result[1][i];
+          }
+
+          this.store.dispatch({ type: "UPDATE", points: newPoints, id: id });
+        }
       }
     }
   }
@@ -127,10 +134,10 @@ export default class Zoom {
     }
   }
 
-  executeZoom() {
-    const points = squarePoints(this.points);
-    const extremePoints = getExtremePoints(points);
-    this.zoomExtend(extremePoints);
+  executeZoom(inputPoints) {
+    const points = squarePoints(inputPoints);
+
+    this.zoomExtend(points);
   }
 
   zoom() {
