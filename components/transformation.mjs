@@ -150,6 +150,7 @@ export default class Transformations {
     else {
       const scales = await getScales();
       this.scale(scales);
+      this.reset();
     }
   }
   addPoint() {
