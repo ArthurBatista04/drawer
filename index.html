@@ -130,6 +130,10 @@
 								the shape will change it's color to red. After select one or
 								more object, it's possible to apply the transformations
 								(Translation, Rotation, Scaling).
+
+							</p>
+							<p>
+								If you want to cancel the current operation, just press the key ESC at any time. 
 							</p>
 							<p style="text-align: center;">
 								<b>Instructions to command line</b>
@@ -139,11 +143,10 @@
 								<code>CRTL+SHIFT+K</code> on Firefox or
 								<code>CRTL+SHIFT+J</code> on Chrome The workflow on the command
 								line is similar to the GUI. First you have to create the shape,
-								then you have to select, lastly you can apply the
-                transformation. Example:
-                <p><code>create_line(x1, x2)</code></p>
-                <p><code>select_shape(id_shape)</code></p>
-                <p><code>scale(x1,x2)</code></p>
+								then you have to select, lastly you can apply thetransformation. Example:
+                				<p><code>create_line(x1, x2)</code></p>
+								<p><code>select_shape(id_shape)</code></p>
+                				<p><code>scale(x1,x2)</code></p>
 							</p>
 							<table>
 								<thead>
@@ -170,24 +173,24 @@
 										<td>Creates a circle using a point and radius</td>
 									</tr>
 									<tr>
-										<td>zoom_in</td>
+										<td>zoom_in(x1, y1, x2, y2)</td>
 										<td>Zooms in a quadratic area</td>
 									</tr>
 									<tr>
-										<td>zoom_extend</td>
+										<td>zoom_extend()</td>
 										<td>Adjust the viewport to fit the screen</td>
 									</tr>
 									<tr>
-										<td>translate</td>
+										<td>translate(x1, y1, x2, y2)</td>
 										<td>Translate object to a determined point</td>
 									</tr>
 									<tr>
-										<td>scale</td>
+										<td>scale(x, y)</td>
 										<td>Scales an object using a point</td>
 									</tr>
 									<tr>
-										<td>rotate</td>
-										<td>Rotates an object using an angle</td>
+										<td>rotate(x, y, angle)</td>
+										<td>Rotates an object using an angle in degrees</td>
 									</tr>
 									<tr>
 										<td>undo (crtl + z)</td>
@@ -198,7 +201,15 @@
 										<td>Redo the last command</td>
 									</tr>
 									<tr>
-										<td>help (crtl + h)</td>
+										<td>clear (crtl + r)</td>
+										<td>clear all the elements in the screen</td>
+									</tr>
+									<tr>
+										<td>clear (crtl + r)</td>
+										<td>clear all the elements in the screen</td>
+									</tr>
+									<tr>
+										<td>help</td>
 										<td>Open the instructions</td>
 									</tr>
 								</tbody>
