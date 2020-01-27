@@ -55,4 +55,4 @@ Node.js
 To execute the program, you need to run the following command:
 
 `npm install`
-`node index.js`
+`node server.js`
