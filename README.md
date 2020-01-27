@@ -48,11 +48,19 @@ scale(x1,x2)
 | redo (crtl + y)                       | Redo the last command                      |
 | clear (crtl + r)                      | Clear all the elements in the screen       |
 
-## Technical specification
-Node.js
 
 ## Run the drawer
-To execute the program, you need to run the following command:
+In this project, we are using .mjs extension for EcmaScript Modules, for this reason, we need a local server running in the machine. 
 
+First of all, make sure you have the Node instaled in you machine by typing the following command:
+`$ node --version`
+
+If you don't have it, make sure to install in the official website clicking [here](https://nodejs.org/en/).
+
+Then, we need to install all the dependencies with the command:
 `npm install`
-`node server.js`
+
+After that, start the server:
+`$ node server.js`
+
+Finally, open the browser and type in the URL: http://localhost:8080/index.html
