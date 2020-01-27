@@ -49,18 +49,10 @@ scale(x1,x2)
 | clear (crtl + r)                      | Clear all the elements in the screen       |
 
 ## Technical specification
-This program was written in Javascript with the library `Redux`.
-
-To install `Redux` you can run the following command:
-
-`npm install redux`
-
-obs: This assumes you are using `npm` as your package manager.
+Node.js
 
 ## Run the drawer
 To execute the program, you need to run the following command:
 
 `npm install`
 `node index.js`
-
-
