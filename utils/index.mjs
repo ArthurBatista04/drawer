@@ -63,3 +63,16 @@ export const getExtremePoints = values => {
   let xMax = values.reduce((max, p) => (p.x > max ? p.x : max), values[0].x);
   return [yMin, yMax, xMin, xMax];
 };
+
+export const circlePoints = points => {
+  const point = points.pop();
+  const center = points.pop();
+  const radius = Math.sqrt(
+    Math.pow(point.x - center.x, 2) + Math.pow(point.y - center.y, 2)
+  );
+  const point1 = { x: center.x - radius, y: center.y };
+  const point2 = { x: center.x + radius, y: center.y };
+  const point3 = { x: center.x, y: center.y - radius };
+  const point4 = { x: center.x, y: center.y + radius };
+  return [center, point1, point2, point3, point4];
+};

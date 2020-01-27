@@ -5,7 +5,8 @@ import {
   Toast,
   $,
   squarePoints,
-  ToastMessage
+  ToastMessage,
+  circlePoints
 } from "../utils/index.mjs";
 
 import Coordinate from "./coordinate.mjs";
@@ -63,6 +64,8 @@ export default class Shapes {
   create() {
     if (this.shape == "SQUARE") {
       this.points = squarePoints(this.points);
+    } else if (this.shape == "CIRCLE") {
+      this.points = circlePoints(this.points);
     }
     this.store.dispatch({
       type: "CREATE",
