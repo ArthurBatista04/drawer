@@ -91,9 +91,8 @@ export default class Transformations {
   }
   translate(translationPoint, referencePoint) {
     const shapes = getSelectedShapes(this.store, "Shapes");
-    const extremePoint = getMinVerticeDistance(shapes, referencePoint);
-    const dx = translationPoint.x - extremePoint.x;
-    const dy = translationPoint.y - extremePoint.y;
+    const dx = translationPoint.x - referencePoint.x;
+    const dy = translationPoint.y - referencePoint.y;
     for (const [id, value] of Object.entries(shapes)) {
       let newPoints = value.points.map(point => {
         return { x: point.x + dx, y: point.y + dy };
@@ -139,9 +138,7 @@ export default class Transformations {
         let message;
         if (this.operation == "TRANSLATE") {
           message =
-            this.points.length == 0
-              ? " Select a shape vertice"
-              : "Select a point to translate to";
+            this.points.length == 0 ? " Select 2 points" : "Select 1 point";
         } else {
           message = `Select a reference point `;
         }
