@@ -77,6 +77,70 @@ export default class CanvasBuilder {
         criator(value);
       }
     }
+    this.createCanvas();
+  }
+
+  createCanvas() {
+    this.create_line({
+      points: [
+        { x: 10, y: 10 },
+        { x: 10, y: 280 }
+      ]
+    });
+    this.create_line({
+      points: [
+        { x: 10, y: 10 },
+        { x: 280, y: 10 }
+      ]
+    });
+    this.create_line({
+      points: [
+        { x: 10, y: 280 },
+        { x: 5, y: 275 }
+      ]
+    });
+    this.create_line({
+      points: [
+        { x: 10, y: 280 },
+        { x: 15, y: 275 }
+      ]
+    });
+    this.create_line({
+      points: [
+        { x: 280, y: 10 },
+        { x: 275, y: 5 }
+      ]
+    });
+    this.create_line({
+      points: [
+        { x: 280, y: 10 },
+        { x: 275, y: 15 }
+      ]
+    });
+    this.create_line({
+      points: [
+        { x: 265, y: 20 },
+        { x: 270, y: 15 }
+      ]
+    });
+    this.create_line({
+      points: [
+        { x: 270, y: 20 },
+        { x: 265, y: 15 }
+      ]
+    });
+    this.create_line({
+      points: [
+        { x: 20, y: 262 },
+        { x: 15, y: 270 }
+      ]
+    });
+    this.create_line({
+      points: [
+        { x: 15, y: 262 },
+        { x: 17, y: 266 }
+      ]
+    });
   }
 
   init() {

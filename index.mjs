@@ -24,6 +24,7 @@ transformations.addEvents();
 zoom.addEvents();
 canvasBuilder.init();
 listBuilder.init();
+canvasBuilder.createCanvas();
 
 Swal.fire(
   "How do I start?",
