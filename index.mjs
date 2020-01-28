@@ -25,6 +25,12 @@ zoom.addEvents();
 canvasBuilder.init();
 listBuilder.init();
 
+Swal.fire(
+  "How do I start?",
+  "Click on 'Draw' to start drawing shapes!",
+  "info"
+);
+
 function create_line(x, y, x2, y2) {
   const point1 = { x: x, y: y };
   const point2 = { x: x2, y: y2 };
